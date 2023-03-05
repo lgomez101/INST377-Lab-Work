@@ -1,52 +1,34 @@
-<!DOCTYPE html>
-<HTML LANG="EN">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luis Gomez's Lab</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="header">
-    <h1>Luis Gomez's Labs for INST 377</h1>
-    <div class="container">
-      <div class="left_section box">
-        
-            <h2>Restaurant Names</h2>
-            <div class="box">
-            <form action="FILL THIS LATER">
-                <label for='Rname'>Res Name:</label>
-                <input type="text" id="resto">
-        
-            </form>
-            <button type="button">Submit</button>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab 4 INST 377</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <h1>INST 377</h1>
+      </header>
+      <div class="container">
+        <div class="left_section box">
+          <h3>Form Input</h3>
+          <form action="/api">
+            <label for="resto"></label><input type="text" name="resto" id="resto" />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+        <div class="right_section box">
+          <h3>Local Res</h3>
+          <div class="restaurant_list box">A list of local res</div>
         </div>
       </div>
-      <div class="right_section box">
-        <h2>Local Res</h2>
-        <div class="box">
-          <p>List of Local Res</p>
-        </div>
-        </div>
+      <div class="footer">
+      <footer>
+        <h2>LGomez101 <a href="https://github.com/lgomez101">Visit my Github</a></h2>
+      </footer>
       </div>
-</div>
-<div class="footer">
-  <footer>
-    <p>LGomez101 <a href="https://github.com/lgomez101">Visit my Github</a></p>
-  </footer>
-</div>
-</body>
-</HTML>
-
-
-<!-- Bring in your successful HTML/CSS from the Flexbox lab -->
-<!-- Try typing 'doc' at the top of this file and pressing "tab" -->
-<!-- if your development environment is set up correctly -->
-<!-- the Emmett plugin will set this file up for you -->
-
-<!-- Requirements -->
-<!-- Your page will need a form in it with an 'action' to /api and a single text field with an id/name of "resto" -->
-<!-- If you open /routes/apiRoutes and go to line 38 you will find the server side answer to your request! -->
-
-<!-- This week doesn't have a script.js file in it, because you're focusing on HTML and CSS -->
+    </div>
+  </body>
+</html>
