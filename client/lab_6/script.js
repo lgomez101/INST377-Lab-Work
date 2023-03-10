@@ -101,7 +101,7 @@ async function mainEvent() {
   // Now write a log using string interpolation - log out the name and category of your first returned entry (index [0]) to the browser console
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors
-  console.log('NAME OF RESTAURANT:' + arrayFromJson[0].name + 'CATEGORY:' + arrayFromJson[0].category);
+  console.log('NAME OF RESTAURANT:' + arrayFromJson[0].name + '      CATEGORY:' + arrayFromJson[0].category);
 
   // This IF statement ensures we can't do anything if we don't have information yet
   if (arrayFromJson?.length > 0) { // the question mark in this means "if this is set at all"
