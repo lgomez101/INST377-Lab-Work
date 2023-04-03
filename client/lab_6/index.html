@@ -14,18 +14,26 @@
       <div class="container">
         <div class="left_section box">
           <h3>Form Input</h3>
-          <div class="box">
+          <div class="box buttons">
+
           <form action="https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json" class="main_form">
+            <button type="button" id="DataLoad">Load County Data</button>
             <label for="resto">Restaurant Name</label>
             <input type="text" id="resto" name="resto"/>
-            <button type="submit" id="get-resto">Submit</button>
-            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+           
+            <button type="button" id="filter_button">Filter Data</button>
+            <button type="button" id="generateList">Generate List</button>
           </form>
+
         </div>
         </div>
         <div class="right_section box">
           <h3>Local Res</h3>
-          <div class="restaurant_list box" id="restaurant_list">A list of local res</div>
+          <ol class="restaurant_list box">
+            List of Local res
+            
+          </ol>
+          <div class="lds-ellipsis" id="loadAnim"><div></div><div></div><div></div><div></div></div>
         </div>
       </div>
       <div class="footer">
@@ -34,7 +42,7 @@
       </footer>
       </div>
     </div>
-    <script src="./script.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
 
@@ -43,15 +51,3 @@
 <!-- If you open /routes/apiRoutes and go to line 38 you will find the server side answer to your request! -->
 
 <!-- Temporarily unhook your script.js file from your main index file -->
-
-
-
-<!--
-    This is how to build the CSS-only load animation from loading.io    
-    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-
-    This is helpful for showing your client-side users when data is loading,
-    since there's otherwise no sign your app is thinking about something!
-
-    Try placing it at the same level in your element tree as your Submit button
--->

@@ -77,13 +77,7 @@
     align-items: start;
     flex:1;
   }
-  
-  .header {
-    padding-top: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-bottom: 1.5rem;
-  }
+
   
   
   /*
@@ -150,6 +144,11 @@
       flex-direction: column;
   }
   
+  .buttons {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
   
   /*
     This block is actually dependent on the "container" block having a flex set on it

@@ -1,133 +1,96 @@
-/* eslint-disable max-len */
 
-/*
-  Hook this script to index.html
-  by adding `<script src="script.js">` just before your closing `</body>` tag
-*/
-
-/*
-  ## Utility Functions
-    Under this comment place any utility functions you need - like an inclusive random number selector
-    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-*/
-
-function getRandomInt(min, max) {
+function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+  return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
 }
+
 function injectHTML(list) {
   console.log('fired injectHTML');
-  const target = document.querySelector("#restaurant_list")
-  target.innerHTML = '';
+  const target = document.querySelector(".restaurant_list")
+  target.innerHTML = " ";
   list.forEach(item => {
     target.innerHTML += `<li>${item.name} </li>`
   })
-
-  /*
-  ## JS and HTML Injection
-    There are a bunch of methods to inject text or HTML into a document using JS
-    Mainly, they're considered "unsafe" because they can spoof a page pretty easily
-    But they're useful for starting to understand how websites work
-    the usual ones are element.innerText and element.innerHTML
-    Here's an article on the differences if you want to know more:
-    https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent#differences_from_innertext
-
-  ## What to do in this function
-    - Accept a list of restaurant objects
-    - using a .forEach method, inject a list element into your index.html for every element in the list
-    - Display the name of that restaurant and what category of food it is
-*/
 }
 
-function processRestaurants(list) {
-  console.log('fired restaurants list');
+function filterList(list, query) {
+  
+  return list.filter((item) => {
+    const lowerName = item.name.toLowerCase();
+    const lowerQuery = query.toLowerCase();
+    return lowerName.includes(lowerQuery)
+  })
+}
+
+function cutResList(list) {
+  console.log('Fired Cut List');
   const range = [...Array(15).keys()];
-  const newArray = range.map((item) => {
-    const index = getRandomInt(0, list.length);
+  return newArray = range.map((item) => {
+    const index = getRandomIntInclusive(0, list.length - 1);
     return list[index]
   })
-  return newArray
-  /*
-    ## Process Data Separately From Injecting It
-      This function should accept your 1,000 records
-      then select 15 random records
-      and return an object containing only the restaurant's name, category, and geocoded location
-      So we can inject them using the HTML injection function
 
-      You can find the column names by carefully looking at your single returned record
-      https://data.princegeorgescountymd.gov/Health/Food-Inspection/umjn-t2iz
-
-    ## What to do in this function:
-
-    - Create an array of 15 empty elements (there are a lot of fun ways to do this, and also very basic ways)
-    - using a .map function on that range,
-    - Make a list of 15 random restaurants from your list of 100 from your data request
-    - Return only their name, category, and location
-    - Return the new list of 15 restaurants so we can work on it separately in the HTML injector
-  */
 }
 
-async function mainEvent() {
-  /*
-    ## Main Event
-      Separating your main programming from your side functions will help you organize your thoughts
-      When you're not working in a heavily-commented "learning" file, this also is more legible
-      If you separate your work, when one piece is complete, you can save it and trust it
-  */
+async function mainEvent() { // the async keyword means we can make API requests
+  const mainForm = document.querySelector('.main_form'); // This class name needs to be set on your form before you can listen for an event on it
+  // Add a querySelector that targets your filter button here
+  const filter_button = document.querySelector('#filter_button')
+  const DataLoad = document.querySelector('#DataLoad')
+  const generateList = document.querySelector('#generateList')
 
-  // the async keyword means we can make API requests
-  const form = document.querySelector('.main_form'); // get your main form so you can do JS with it
-  const submit = document.querySelector('#get-resto'); // get a reference to your submit button
-  const loadAnim = document.querySelector('.lds-ellipsis');
-  submit.style.display = 'none'; // let your submit button disappear
+  const loadAnim = document.querySelector('#loadAnim')
 
-  /*
-    Let's get some data from the API - it will take a second or two to load
+  
+  let currentList = []; // this is "scoped" to the main event function
+  
+  DataLoad.addEventListener('click', async (submitEvent) => { // async has to be declared on every function that needs to "await" something
+    loadAnim.style.display = 'inline-block'
     
-   */
-  const results = await fetch('https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json');
-  const arrayFromJson = await results.json(); // here is where we get the data from our request as JSON
+    console.log('Loading Data'); 
 
+    const results = await fetch('https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json');
+
+    currentList = await results.json();
+    loadAnim.style.display = 'none';
+
+    console.table(currentList); 
+  });
+
+  filter_button.addEventListener('click', (event) =>{
+    console.log('clicked filter');
+    const formData = new FormData(mainForm);
+    const formProps = Object.fromEntries(formData);
+    console.log(formProps);
+    const newList = filterList(currentList, formProps.resto)
+    console.log(newList)
+    injectHTML(newList)
+  });
+
+  generateList.addEventListener('click', (event) => {
+    console.log('Generated New List');
+    const resList = cutResList(currentList);
+    console.log(resList);
+    injectHTML(resList);
+
+  })
   /*
-    Below this comment, we log out a table of all the results:
+    Now that you HAVE a list loaded, write an event listener set to your filter button
+    it should use the 'new FormData(target-form)' method to read the contents of your main form
+    and the Object.fromEntries() method to convert that data to an object we can work with
+
+    When you have the contents of the form, use the placeholder at line 7
+    to write a list filter
+
+    Fire it here and filter for the word "pizza"
+    you should get approximately 46 results
   */
-  console.table(arrayFromJson);
-
-  // As a next step, log the first entry from your returned array of data.
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
-  console.log(arrayFromJson[0]);
-
-  // Now write a log using string interpolation - log out the name and category of your first returned entry (index [0]) to the browser console
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors
-  console.log('NAME OF RESTAURANT:' + arrayFromJson[0].name + '      CATEGORY:' + arrayFromJson[0].category);
-
-  // This IF statement ensures we can't do anything if we don't have information yet
-  if (arrayFromJson?.length > 0) { // the question mark in this means "if this is set at all"
-    submit.style.display = 'block'; // let's turn the submit button back on by setting it to display as a block when we have data available
-    loadAnim.classList.remove('lds-ellipsis');
-    loadAnim.classList.add('lds-ellipsis_hidden');
-    // And here's an eventListener! It's listening for a "submit" button specifically being clicked
-    // this is a synchronous event event, because we already did our async request above, and waited for it to resolve
-    form.addEventListener('submit', (submitEvent) => {
-      // Using .preventDefault, stop the page from refreshing when a submit event happens
-      // https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault
-      submitEvent.preventDefault();
-
-      // This constant will contain the value of your 15-restaurant collection when it processes
-      const restaurantList = processRestaurants(arrayFromJson);
-      console.log(restaurantList)
-
-      // And this function call will perform the "side effect" of injecting the HTML list for you
-      injectHTML(restaurantList);
-    });
-  }
 }
 
 /*
-  This last line actually runs first!
-  It's calling the 'mainEvent' function at line 57
-  It runs first because the listener is set to when your HTML content has loaded
+  This adds an event listener that fires our main event only once our page elements have loaded
+  The use of the async keyword means we can "await" events before continuing in our scripts
+  In this case, we load some data when the form has submitted
 */
 document.addEventListener('DOMContentLoaded', async () => mainEvent()); // the async keyword means we can make API requests
