@@ -1,0 +1,54 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luis Gomez Lab 8 INST 377</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <h1>Luis Gomez Lab 8 INST 377</h1>
+      </header>
+      <div class="container">
+        <div class="left_section box">
+          <h3>Form Input</h3>
+          <div class="box buttons">
+
+          <form action="https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json" class="main_form">
+            <button type="button" id="DataLoad">Load County Data</button>
+            <button type="button" id="dataClear">Clear County Data</button>
+            <label for="resto"> Filter by Restaurant Name</label>
+            <input type="text" id="resto" name="resto"/>
+           
+            <button type="button" id="generateList">Generate List</button>
+          </form>
+
+        </div>
+        </div>
+        <div class="right_section box">
+          <h3>Local Res</h3>
+          <div id="map" class="map"></div>
+          <ol class="restaurant_list box">
+            List of Local res
+            
+          </ol>
+          <div class="lds-ellipsis" id="loadAnim"><div></div><div></div><div></div><div></div></div>
+        </div>
+      </div>
+      <div class="footer">
+      <footer>
+        <h2>LGomez101 <a href="https://github.com/lgomez101">Visit my Github</a></h2>
+      </footer>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
